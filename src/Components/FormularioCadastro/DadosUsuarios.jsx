@@ -15,7 +15,7 @@ const DadosUsuarios = ({aoEnviar}) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        aoEnviar();
+        aoEnviar({email, senha});
     }
     return (
         <form onSubmit={submitHandler}>
