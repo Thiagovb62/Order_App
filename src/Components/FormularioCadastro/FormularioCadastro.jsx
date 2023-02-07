@@ -12,7 +12,7 @@ const FormularioCadastro = ({onSubmit}) => {
     };
 
     const pages = [<DadosUsuarios aoEnviar={ nextEtapaHandler }/>, <DadosPessoais onSubmit={ nextEtapaHandler }/>,
-        <DadosEntrega aoEnviar={ onSubmit }/>];
+        <DadosEntrega onSubmit={onSubmit }/>];
 
     let page = pages[etapaAtual];
     for (page in pages) {
