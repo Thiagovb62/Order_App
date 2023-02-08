@@ -2,26 +2,25 @@ import React, { useState} from 'react';
 import {Button, TextField, Switch, FormControlLabel} from '@material-ui/core';
 
 
-const  DadosPessoais = ({onSubmit}) => {
+const  DadosPessoais = ({onSubmit,validacoes}) => {
 
-    const [name, setName] = useState("");
+    const [nome, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [cpf, setCpf] = useState("");
     const [promotions, setPromotions] = useState(false);
     const [news, setNews] = useState(false);
     const [errors, setErrors] = useState({cpf: {valid: true, text: ""}});
 
-    const onFormSubmit = (event) => {
-        event.preventDefault();
-        onSubmit({name, surname, cpf, promotions, news});
+    function validateCampos(event) {
+        const {name, value} = event.target;
+        const newErrors = {...errors};
+        newErrors[name] = validacoes[name](value);
+        setErrors(newErrors);
     }
 
-    const validateCpf = (DATA) => {
-        if (DATA.target.value.length !== 11) {
-            setErrors({cpf: {valid: false, text: "CPF deve ter 11 dígitos."}});
-        } else {
-            setErrors({cpf: {valid: true, text: ""}});
-        }
+    const onFormSubmit = (event) => {
+        event.preventDefault();
+        onSubmit({nome, surname, cpf, promotions, news});
     }
 
     const onChangeName = (event) => {
@@ -45,7 +44,7 @@ const  DadosPessoais = ({onSubmit}) => {
             <form onSubmit={onFormSubmit}>
                 <TextField
                     id="nome"
-                    value={name}
+                    value={nome}
                     label="Nome"
                     variant="outlined"
                     margin="normal"
@@ -64,10 +63,11 @@ const  DadosPessoais = ({onSubmit}) => {
                 />
 
                 <TextField
-                    onBlur={validateCpf}
                     onChange={onChangeCpf}
+                    onBlur={validateCampos}
                     id="cpf"
                     label="CPF"
+                    name="cpf"
                     error={!errors.cpf.valid}
                     helperText={errors.cpf.text}
                     value={cpf}
@@ -104,7 +104,9 @@ const  DadosPessoais = ({onSubmit}) => {
                 <Button
                     type="submit"
                     variant="contained"
-                    color="primary">
+                    color="primary"
+                    onClick={validateCampos}
+                >
                     Cadastrar
                 </Button>
 

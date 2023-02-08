@@ -6,7 +6,7 @@ import {Step, StepLabel, Stepper, Typography} from "@material-ui/core";
 
 
 
-const FormularioCadastro = ({onSubmit}) => {
+const FormularioCadastro = ({onSubmit,validacoes}) => {
     const [etapaAtual, setEtapaAtual] = React.useState(0);
     const [dadosColetados, setDados] = React.useState({});
 
@@ -24,8 +24,9 @@ const FormularioCadastro = ({onSubmit}) => {
         nextEtapaHandler();
     }
 
-    const pages = [<DadosUsuarios aoEnviar={ coletaDadosHandler }/>, <DadosPessoais onSubmit={ coletaDadosHandler }/>,
-        <DadosEntrega onSubmit={coletaDadosHandler }/>,<Typography variant="h5" align="center">Obrigado pelo cadastro!</Typography>];
+
+    const pages = [<DadosUsuarios aoEnviar={ coletaDadosHandler } validacoes={ validacoes }/>, <DadosPessoais onSubmit={ coletaDadosHandler } validacoes={ validacoes }/>,
+        <DadosEntrega onSubmit={coletaDadosHandler } validacoes={ validacoes }/>,<Typography variant="h5" align="center">Obrigado pelo cadastro!</Typography>];
 
     // eslint-disable-next-line no-unreachable
     return <React.Fragment>
