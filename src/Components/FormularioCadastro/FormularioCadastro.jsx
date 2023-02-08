@@ -5,13 +5,12 @@ import DadosEntrega from "./DadosEntrega";
 import {Step, StepLabel, Stepper, Typography} from "@material-ui/core";
 
 
-
-const FormularioCadastro = ({onSubmit,validacoes}) => {
+const FormularioCadastro = ({onSubmit,}) => {
     const [etapaAtual, setEtapaAtual] = React.useState(0);
     const [dadosColetados, setDados] = React.useState({});
 
     useEffect(() => {
-        if (etapaAtual === pages. length - 1) {
+        if (etapaAtual === pages.length - 1) {
             onSubmit(dadosColetados);
         }
     });
@@ -25,19 +24,23 @@ const FormularioCadastro = ({onSubmit,validacoes}) => {
     }
 
 
-    const pages = [<DadosUsuarios aoEnviar={ coletaDadosHandler } validacoes={ validacoes }/>, <DadosPessoais onSubmit={ coletaDadosHandler } validacoes={ validacoes }/>,
-        <DadosEntrega onSubmit={coletaDadosHandler } validacoes={ validacoes }/>,<Typography variant="h5" align="center">Obrigado pelo cadastro!</Typography>];
+    const pages = [
+        <DadosUsuarios aoEnviar={ coletaDadosHandler } />,
+        <DadosPessoais onSubmit={ coletaDadosHandler } />,
+        <DadosEntrega onSubmit={ coletaDadosHandler } />,
+        <Typography variant="h5" align="center">Obrigado pelo cadastro!</Typography>
+    ];
 
     // eslint-disable-next-line no-unreachable
     return <React.Fragment>
-        <Stepper activeStep={etapaAtual}>
+        <Stepper activeStep={ etapaAtual }>
             <Step><StepLabel>Login</StepLabel></Step>
             <Step><StepLabel>Dados Pessoais</StepLabel></Step>
             <Step><StepLabel>Dados de Entrega</StepLabel></Step>
             <Step><StepLabel>Finalização</StepLabel></Step>
         </Stepper>
-            { pages[etapaAtual] }
-        </React.Fragment>
+        { pages[etapaAtual] }
+    </React.Fragment>
 
 };
 
