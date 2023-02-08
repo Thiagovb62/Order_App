@@ -1,9 +1,17 @@
 import React from "react";
 import {Button, TextField} from "@material-ui/core";
 
-const DadosUsuarios = ({aoEnviar}) => {
+const DadosUsuarios = ({aoEnviar,validacoes}) => {
     const [email, setEmail] = React.useState("");
     const [senha, setSenha] = React.useState("");
+    const [errors, setErrors] = React.useState({senha: {valid: true, text: ""}});
+
+    const validateCampos = (event) => {
+        const {name, value} = event.target;
+        const newErrors = {...errors};
+        newErrors[name] = validacoes[name](value);
+        setErrors(newErrors);
+    }
 
     const submitSenhaHandler = (e) => {
         setSenha(e.target.value);
@@ -15,7 +23,12 @@ const DadosUsuarios = ({aoEnviar}) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        aoEnviar({email, senha});
+        for (let campo in errors) {
+            if (!errors[campo].valid) {
+                return;
+            }
+        }
+                aoEnviar({email, senha});
     }
     return (
         <form onSubmit={submitHandler}>
@@ -33,8 +46,12 @@ const DadosUsuarios = ({aoEnviar}) => {
             <TextField
                 id="senha"
                 label="Senha"
+                name="senha"
                 value={senha}
                 onChange={submitSenhaHandler}
+                onBlur={validateCampos}
+                error={!errors.senha.valid}
+                helperText={errors.senha.text}
                 type="password"
                 required={true}
                 variant="outlined"
@@ -46,7 +63,7 @@ const DadosUsuarios = ({aoEnviar}) => {
                 variant="contained"
                 color="primary"
             >
-                Cadastrar
+                proximo
             </Button>
 
         </form>

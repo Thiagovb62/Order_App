@@ -96,7 +96,6 @@ const  DadosPessoais = ({onSubmit,validacoes}) => {
                             checked={news}
                             name="novidades"
                             id="novidades"
-
                             onChange={onChangeNews}
                         />
                     }/>
@@ -107,7 +106,7 @@ const  DadosPessoais = ({onSubmit,validacoes}) => {
                     color="primary"
                     onClick={validateCampos}
                 >
-                    Cadastrar
+                    proximo
                 </Button>
 
             </form>

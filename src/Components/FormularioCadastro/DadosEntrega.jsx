@@ -41,6 +41,7 @@ const submitHandler = (event) => {
                 value={cep}
                 label="CEP"
                 onChange={submitCepHandler}
+                required={true}
                 type="number"
                 variant="outlined"
                 margin="normal"
@@ -50,6 +51,7 @@ const submitHandler = (event) => {
                 value={endereco}
                 onChange={submitEnderecoHandler}
                 label="Endereço"
+                required={true}
                 type="text"
                 variant="outlined"
                 margin="normal"
@@ -59,6 +61,7 @@ const submitHandler = (event) => {
                 id="numero"
                 label="Número"
                 value={numero}
+                required={true}
                 onChange={submitNumeroHandler}
                 type="number"
                 variant="outlined"
@@ -70,6 +73,7 @@ const submitHandler = (event) => {
                 value={estado}
                 onChange={submitEstadoHandler}
                 type="text"
+                required={true}
                 variant="outlined"
                 margin="normal"
             />
@@ -79,6 +83,7 @@ const submitHandler = (event) => {
                 value={cidade}
                 onChange={submitCidadeHandler}
                 type="text"
+                required={true}
                 variant="outlined"
                 margin="normal"
             />
