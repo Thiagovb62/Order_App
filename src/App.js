@@ -12,9 +12,7 @@ const App = () => {
             <header className="App-header">
                 <Container component="article" maxWidth="sm">
                     <Typography variant="h3" component="h1" align="center">Formulário de cadastro</Typography>
-                    <ValidacaoCadastro.Provider value={{cpf:ValidaCpf, senha:ValidaSenha}}>
                     <FormularioCadastro onSubmit={SubmitFormHandler} validacoes={{cpf:ValidaCpf, senha:ValidaSenha}}/>
-                    </ValidacaoCadastro.Provider>
                 </Container>
             </header>
         </div>

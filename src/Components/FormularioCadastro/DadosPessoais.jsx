@@ -1,28 +1,30 @@
-import React, { useState,useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {Button, TextField, Switch, FormControlLabel} from '@material-ui/core';
 import ValidacaoCadastro from "../../Context/ValidacaoCadastro";
+import useErros from "../Hooks/useErros";
 
 
-const  DadosPessoais = ({onSubmit}) => {
+const DadosPessoais = ({onSubmit}) => {
 
     const [nome, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [cpf, setCpf] = useState("");
     const [promotions, setPromotions] = useState(false);
     const [news, setNews] = useState(false);
-    const [errors, setErrors] = useState({cpf: {valid: true, text: ""}});
 
     const validacoes = useContext(ValidacaoCadastro);
 
-    function validateCampos(event) {
-        const {name, value} = event.target;
-        const newErrors = {...errors};
-        newErrors[name] = validacoes[name](value);
-        setErrors(newErrors);
-    }
+
+    const [errors, validaCampos] = useErros(validacoes)
+
 
     const onFormSubmit = (event) => {
         event.preventDefault();
+        for (let campo in errors) {
+            if (!errors[campo].valid) {
+                return;
+            }
+        }
         onSubmit({nome, surname, cpf, promotions, news});
     }
 
@@ -44,36 +46,36 @@ const  DadosPessoais = ({onSubmit}) => {
 
     return (
         <>
-            <form onSubmit={onFormSubmit}>
+            <form onSubmit={ onFormSubmit }>
                 <TextField
                     id="nome"
-                    value={nome}
+                    value={ nome }
                     label="Nome"
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    onChange = {onChangeName}
+                    onChange={ onChangeName }
                 />
 
                 <TextField
                     id="sobrenome"
-                    value={surname}
+                    value={ surname }
                     label="Sobrenome"
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    onChange={onChangeSurname}
+                    onChange={ onChangeSurname }
                 />
 
                 <TextField
-                    onChange={onChangeCpf}
-                    onBlur={validateCampos}
+                    onChange={ onChangeCpf }
+                    onBlur={ validaCampos }
                     id="cpf"
                     label="CPF"
                     name="cpf"
-                    error={!errors.cpf.valid}
-                    helperText={errors.cpf.text}
-                    value={cpf}
+                    error={ !errors.cpf.valid }
+                    helperText={ errors.cpf.text }
+                    value={ cpf }
                     variant="outlined"
                     margin="normal"
                     fullWidth
@@ -84,11 +86,11 @@ const  DadosPessoais = ({onSubmit}) => {
 
                     control={
                         <Switch
-                            checked={promotions}
+                            checked={ promotions }
                             name="promocoes"
                             id="promocoes"
 
-                            onChange={onChangePromotions}
+                            onChange={ onChangePromotions }
                         />
                     }/>
 
@@ -96,10 +98,10 @@ const  DadosPessoais = ({onSubmit}) => {
                     label="Novidades"
                     control={
                         <Switch
-                            checked={news}
+                            checked={ news }
                             name="novidades"
                             id="novidades"
-                            onChange={onChangeNews}
+                            onChange={ onChangeNews }
                         />
                     }/>
 
@@ -107,7 +109,6 @@ const  DadosPessoais = ({onSubmit}) => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    onClick={validateCampos}
                 >
                     proximo
                 </Button>

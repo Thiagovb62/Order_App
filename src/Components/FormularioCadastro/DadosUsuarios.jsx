@@ -1,21 +1,14 @@
 import React, {useContext} from "react";
 import {Button, TextField} from "@material-ui/core";
 import ValidacaoCadastro from "../../Context/ValidacaoCadastro";
+import useErros from "../Hooks/useErros";
 
 const DadosUsuarios = ({aoEnviar}) => {
     const [email, setEmail] = React.useState("");
     const [senha, setSenha] = React.useState("");
-    const [errors, setErrors] = React.useState({senha: {valid: true, text: ""}});
-
-
     const validacoes = useContext(ValidacaoCadastro);
 
-    const validateCampos = (event) => {
-        const {name, value} = event.target;
-        const newErrors = {...errors};
-        newErrors[name] = validacoes[name](value);
-        setErrors(newErrors);
-    }
+    const [errors, validaCampos] = useErros(validacoes);
 
     const submitSenhaHandler = (e) => {
         setSenha(e.target.value);
@@ -53,7 +46,7 @@ const DadosUsuarios = ({aoEnviar}) => {
                 name="senha"
                 value={senha}
                 onChange={submitSenhaHandler}
-                onBlur={validateCampos}
+                onBlur={validaCampos}
                 error={!errors.senha.valid}
                 helperText={errors.senha.text}
                 type="password"
